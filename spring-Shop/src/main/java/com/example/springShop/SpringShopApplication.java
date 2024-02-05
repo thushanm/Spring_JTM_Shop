@@ -1,7 +1,9 @@
 package com.example.springShop;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SpringShopApplication {
@@ -10,4 +12,9 @@ public class SpringShopApplication {
 		SpringApplication.run(SpringShopApplication.class, args);
 	}
 
+	@Bean
+public ModelMapper modelMapper(){
+
+		return new ModelMapper();
+	}
 }
