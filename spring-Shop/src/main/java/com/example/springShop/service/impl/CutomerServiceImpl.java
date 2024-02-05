@@ -41,11 +41,15 @@ return customerDTO;
 
      if (customer != null){
         return modelMapper.map(customer, CustomerDTO.class);
-
      }
      else {
          return null;
      }
+
+    }
+    @Override
+    public void deleteCustomer(int id) {
+        customerRepository.deleteById(id);
 
     }
 
