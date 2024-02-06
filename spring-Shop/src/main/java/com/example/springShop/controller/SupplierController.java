@@ -10,8 +10,9 @@ import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
-@RequestMapping("/suplier")
 public class SupplierController {
     @Autowired
     private SupplierService service;
@@ -23,18 +24,34 @@ public class SupplierController {
 
         return ResponseEntity.ok(service.saveSupplier(supplierDTO));
     }
-    @PostMapping(path = "/s", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/saveSup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<SupplierDTO> supplierSaveWithImage(
             @RequestParam int id,
             @RequestParam String name,
             @RequestParam String address,
             @RequestParam String pNumber,
-            @RequestPart("s") MultipartFile s) {
+            @RequestPart("photo") MultipartFile photo) {
         try {
-            byte[] imageBytes = s.getBytes();
+            byte[] imageBytes = photo.getBytes();
             return new ResponseEntity<>(service.saveSupplier(new SupplierDTO(id, name, address, pNumber, imageBytes)), HttpStatus.OK);
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PutMapping(path = "/updateSup/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<SupplierDTO> supplierUpdate(@RequestParam("p") MultipartFile p,
+                                                      @PathVariable int id, SupplierDTO supplierDTO) {
+        if (supplierDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            supplierDTO.setId(id);
+        }
+        try {
+            supplierDTO.setSPhoto(p.getBytes());
+        } catch (IOException e) {
+         e.getMessage();
+        }
+
+        return new ResponseEntity<>(service.updateSupplier(supplierDTO), HttpStatus.OK);
     }
 }

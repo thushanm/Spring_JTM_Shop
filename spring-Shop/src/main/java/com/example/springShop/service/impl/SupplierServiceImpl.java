@@ -27,7 +27,8 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierDTO updateSupplier(SupplierDTO supplierDTO) {
-        return null;
+       supplierRepository.save(modelMapper.map(supplierDTO,Suppliers.class));
+       return supplierDTO;
     }
 
     @Override
