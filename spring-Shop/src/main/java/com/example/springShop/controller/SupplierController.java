@@ -62,4 +62,11 @@ public class SupplierController {
 
 
     }
+
+    @DeleteMapping("/delSup/{id}")
+    public ResponseEntity<SupplierDTO> deleteSupplier(@PathVariable("id")int id){
+        service.deleteSupplier(id);
+        return new ResponseEntity<>(null,HttpStatus.OK);
+
+    }
 }
