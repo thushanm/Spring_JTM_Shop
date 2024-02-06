@@ -54,4 +54,12 @@ public class SupplierController {
 
         return new ResponseEntity<>(service.updateSupplier(supplierDTO), HttpStatus.OK);
     }
+    @GetMapping("/getSup/{id}")
+
+    public ResponseEntity<SupplierDTO> searchSupplier(@PathVariable("id") int id){
+
+        return new ResponseEntity<>(service.searchSupplier(id),HttpStatus.OK);
+
+
+    }
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Supplier;
+
 @Service
 @Transactional
 public class SupplierServiceImpl implements SupplierService {
@@ -33,7 +35,17 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierDTO searchSupplier(int id) {
-        return null;
+
+    Suppliers supplier=supplierRepository.findById(id).orElse(null);
+
+    if (supplier !=  null){
+
+      return modelMapper.map(supplier,SupplierDTO.class);
+    }
+        else {
+
+            return null;
+    }
     }
 
     @Override
