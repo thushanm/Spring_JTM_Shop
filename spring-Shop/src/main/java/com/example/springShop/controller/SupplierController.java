@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@RequestMapping("api/v1/supplier")
 public class SupplierController {
     @Autowired
     private SupplierService service;
@@ -24,7 +25,7 @@ public class SupplierController {
 
         return ResponseEntity.ok(service.saveSupplier(supplierDTO));
     }
-    @PostMapping(path = "/saveSup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<SupplierDTO> supplierSaveWithImage(
             @RequestParam int id,
             @RequestParam String name,
@@ -38,19 +39,14 @@ public class SupplierController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PutMapping(path = "/updateSup/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<SupplierDTO> supplierUpdate(@RequestParam("p") MultipartFile p,
-                                                      @PathVariable int id, SupplierDTO supplierDTO) {
-        if (supplierDTO == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else {
-            supplierDTO.setId(id);
-        }
-        try {
-            supplierDTO.setSPhoto(p.getBytes());
-        } catch (IOException e) {
-         e.getMessage();
-        }
+
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<SupplierDTO> supplierUpdate(@RequestParam MultipartFile p,
+                                                      SupplierDTO supplierDTO) throws IOException {
+
+        byte[] image = p.getBytes();
+ supplierDTO.setSPhoto(image);
 
         return new ResponseEntity<>(service.updateSupplier(supplierDTO), HttpStatus.OK);
     }

@@ -1,10 +1,14 @@
 package com.example.springShop.entity;
 
+import com.example.springShop.entity.Item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,8 +22,11 @@ public class Suppliers {
     private String name;
     private String address;
     private String pNumber;
+
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] sPhoto;
-
+@JsonIgnore
+    @OneToMany(mappedBy = "suppliers", cascade = CascadeType.ALL,targetEntity = Item.class,fetch = FetchType.LAZY)
+    private List<Item> itemList;
 }
