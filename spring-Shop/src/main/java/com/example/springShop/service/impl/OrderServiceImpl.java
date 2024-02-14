@@ -21,43 +21,20 @@ public class OrderServiceImpl implements OrderService {
   @Autowired
     private ModelMapper modelMapper;
 
-
+@Transactional
     @Override
     public OrderDTO saveOrder(OrderDTO orderDTO) {
-        System.out.println(orderDTO.getOrderDetailsList().get(0).getItem());
 orderRepository.save(modelMapper.map(orderDTO, Order.class));
-
-//
-//    for (OrderDetails orderDetails:order.getOrderDetailsList()) {
-//
-//        System.out.println("oky da");
-//   Item item = itemRepository.findById(orderDetails.getItem().getItemId()).get();
-//      item.setItemQty(item.getItemQty()-orderDetails.getQty());
-//
-//    }
-//
-//     Payment payment = new Payment();
-//payment.setPrice(order.getItemPrice());
-// payment.setPayId(order.getOrderId());
-// payment.setDateTime(order.getDateTime());
-// payment.setCustomerName(String.valueOf(order.getCustomerName()));
-// payment.setPayType(order.getPayType());
-//
-//      paymentRepository.save(payment);
-
-      return orderDTO;
+return orderDTO;
     }
-
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
         return null;
     }
-
     @Override
     public OrderDTO searchOrder(int id) {
         return null;
     }
-
     @Override
     public void deleteOrder(int id) {
 

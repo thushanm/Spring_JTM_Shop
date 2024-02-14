@@ -27,14 +27,11 @@ public class ItemServiceImpl implements ItemService {
 
       itemRepository.save(modelMapper.map(itemDTO, Item.class));
       return itemDTO;
-
-
     }
 
     @Override
     public ItemDTO searchItem(int id) {
         Item item = itemRepository.findById(id).orElse(null);
-
       if (item != null){
         return modelMapper.map(item, ItemDTO.class);
 
@@ -47,7 +44,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(int id) {
-
     itemRepository.deleteById(id);
     }
 }

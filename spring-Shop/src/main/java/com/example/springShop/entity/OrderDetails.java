@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 @IdClass(OrderDetails_PK.class)
 public class OrderDetails  {
     @Id
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    Order order;
+    private int orderId;
     @Id
+    private int itemId;
     @ManyToOne
-    @JoinColumn(name = "itemId")
+    @JoinColumn(name = "orderId",insertable = false,updatable = false)
+    Order order;
+    @ManyToOne
+    @JoinColumn(name = "itemId",insertable = false,updatable = false)
     Item item;
     private int qty;
 }
