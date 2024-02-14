@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class AppwideExceptionHandler {
+public class AppwideExceptionHandler extends RuntimeException {
     @ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> stringResponseEntity(Exception exception){
+    public ResponseEntity<String>  OrderCreationException(Exception exception){
 
         exception.printStackTrace();
         return ResponseEntity.ok(exception.getMessage());

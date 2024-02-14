@@ -26,7 +26,5 @@ public class Suppliers {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] sPhoto;
-@JsonIgnore
-    @OneToMany(mappedBy = "suppliers", cascade = CascadeType.ALL,targetEntity = Item.class,fetch = FetchType.LAZY)
-    private List<Item> itemList;
+
 }

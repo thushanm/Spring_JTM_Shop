@@ -1,19 +1,20 @@
 package com.example.springShop.dto;
 
+import com.example.springShop.entity.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Role;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+public class OrderDetailsDTO {
 
-public class UserDTO {
-        private int userId;
-        private String userName;
-        private String userEmail;
-        private String userPwd;
+        Order order;
+        Item item;
+        private int qty;
 
 }

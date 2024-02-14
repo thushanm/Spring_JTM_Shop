@@ -15,5 +15,4 @@ public class ItemDTO {
     private int itemQty;
     private double itemPrice;
     private byte[] itemImg;
-    private Suppliers suppliers;
 }

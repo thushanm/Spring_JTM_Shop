@@ -11,10 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PaymentDTO {
 
-
-
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int payId;
         private String customerName;
         private String payType;
