@@ -15,17 +15,38 @@ import java.util.List;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
-
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
     @Autowired
     private OrderRepository orderRepository;
   @Autowired
     private ModelMapper modelMapper;
 
+
 @Transactional
     @Override
     public OrderDTO saveOrder(OrderDTO orderDTO) {
-orderRepository.save(modelMapper.map(orderDTO, Order.class));
-return orderDTO;
+    Order save = orderRepository.save(modelMapper.map(orderDTO, Order.class));
+
+    for (OrderDetails orderDetails: save.getOrderDetailsList() ) {
+        Item item = itemRepository.findById(orderDetails.getItemId()).get();
+        item.setItemQty(item.getItemQty()-orderDetails.getQty());
+        itemRepository.save(item);
+
+    }
+
+    Payment payment = new Payment();
+payment.setPrice(orderDTO.getItemPrice());
+payment.setPayType(orderDTO.getPayType());
+payment.setPayId(orderDTO.getOrderId());
+payment.setCustomerName(String.valueOf(orderDTO.getCustomerName().getName()));
+payment.setDateTime(orderDTO.getDateTime());
+
+paymentRepository.save(payment);
+
+    return orderDTO;
     }
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
