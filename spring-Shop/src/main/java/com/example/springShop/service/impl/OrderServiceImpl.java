@@ -50,14 +50,22 @@ paymentRepository.save(payment);
     }
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
-        return null;
+
+            orderRepository.save(modelMapper.map(orderDTO, Order.class));
+
+
+    return orderDTO;
     }
     @Override
     public OrderDTO searchOrder(int id) {
-        return null;
+     Order order = orderRepository.findById(id).orElse(null);
+     if (order != null){
+         return modelMapper.map(order,OrderDTO.class);
+     }
+     return null;
     }
     @Override
     public void deleteOrder(int id) {
-
+orderRepository.deleteById(id);
     }
 }
